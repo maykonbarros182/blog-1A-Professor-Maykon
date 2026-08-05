@@ -207,6 +207,102 @@
             <p>Contudo, a ideia de que o desenho é uma alegoria trágica ou assustadora sobre radiação nunca foi confirmada como a intenção narrativa oficial. Hillenburg queria apenas criar um universo absurdo e divertido no fundo do mar, aproveitando o nome real do local como um trocadilho e uma referência histórica.</p>
 
             <p>Seja uma mutação radioativa fictícia ou apenas fruto da genialidade cômica de Hillenburg, a Fenda do Biquíni continuará guardando mistérios que intrigam milhões de fãs ao redor do mundo.</p>
+
+<!-- Cole este bloco dentro da sua tag <article>, antes de fechar </article> ou no final do texto -->
+
+<div class="like-container">
+    <button id="likeBtn" class="like-button" onclick="handleLike()">
+        <span class="heart-icon">❤️</span> 
+        <span id="likeText">Curtir</span>
+    </button>
+    <span id="likeCount" class="like-count">0</span> curtidas
+</div>
+
+<style>
+    .like-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 40px 0 20px 0;
+        padding-top: 20px;
+        border-top: 1px dashed var(--border-color);
+    }
+
+    .like-button {
+        background-color: transparent;
+        border: 2px solid var(--accent-color);
+        color: var(--accent-color);
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .like-button:hover {
+        background-color: var(--accent-color);
+        color: var(--bg-color);
+        transform: scale(1.05);
+    }
+
+    .like-button.liked {
+        background-color: #ff4757;
+        border-color: #ff4757;
+        color: #ffffff;
+    }
+
+    .like-count {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--warning-color);
+    }
+</style>
+
+<script>
+    // Inicialização do contador via localStorage para persistir as curtidas
+    const INITIAL_LIKES = 142; // Valor inicial do blog
+    let likes = parseInt(localStorage.getItem('blogLikes')) || INITIAL_LIKES;
+    let hasLiked = localStorage.getItem('userHasLiked') === 'true';
+
+    const likeCountEl = document.getElementById('likeCount');
+    const likeBtnEl = document.getElementById('likeBtn');
+    const likeTextEl = document.getElementById('likeText');
+
+    function updateUI() {
+        likeCountEl.textContent = likes;
+        if (hasLiked) {
+            likeBtnEl.classList.add('liked');
+            likeTextEl.textContent = 'Curtido!';
+        } else {
+            likeBtnEl.classList.remove('liked');
+            likeTextEl.textContent = 'Curtir';
+        }
+    }
+
+    function handleLike() {
+        if (!hasLiked) {
+            likes++;
+            hasLiked = true;
+        } else {
+            likes--;
+            hasLiked = false;
+        }
+
+        // Salva o estado no navegador do leitor
+        localStorage.setItem('blogLikes', likes);
+        localStorage.setItem('userHasLiked', hasLiked);
+
+        updateUI();
+    }
+
+    // Carrega os dados ao abrir a página
+    updateUI();
+</script>
+            
         </article>
 
         <footer>
